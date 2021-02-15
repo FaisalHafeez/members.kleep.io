@@ -10,7 +10,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(24),
+        marginTop: theme.spacing(14),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -58,7 +58,11 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.contrastText,
         textDecoration: 'none',
         fontStyle: 'bold'
-    }
+    },
+    large: {
+        width: theme.spacing(7),
+        height: theme.spacing(7),
+    },
 }));
 
 const SignIn = () => {
