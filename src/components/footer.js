@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     bacgroundColorBlack: {
-        backgroundColor: '#000000',
-        paddingBottom: 300,
+        backgroundColor: '#333333',
+        paddingBottom: 75,
         color: 'white'
     },
     Margin: {
