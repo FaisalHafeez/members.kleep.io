@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, TextField, Typography, Box, Button } from '@material-ui/core';
 
@@ -15,6 +15,23 @@ const useStyles = makeStyles((theme) => ({
 
 const PersonalInfo = () => {
     const classes = useStyles();
+    const initialPersonInfo = {
+        name: '',
+        email: '',
+        password: ''
+    };
+
+    const [person, setPerson] = useState(initialPersonInfo);
+
+    const handleChange = ({ target: { name, value } }) => {
+        setPerson({
+            ...person, [name]: value
+        })
+    }
+
+    const handleSubmit = () => {
+        console.log('person ----', person);
+    }
 
     return (
         <div className={classes.root}>
@@ -32,7 +49,8 @@ const PersonalInfo = () => {
                     <TextField
                         name="name"
                         label="Name"
-                        value="Julian Cabada"
+                        value={person.name}
+                        onChange={handleChange}
                         fullWidth />
                 </Grid>
                 <Grid item xs={6}>
@@ -48,7 +66,8 @@ const PersonalInfo = () => {
                     <TextField
                         name="email"
                         label="Email"
-                        value="Julian@gmial.com"
+                        value={person.email}
+                        onChange={handleChange}
                         fullWidth />
                 </Grid>
                 <Grid item xs={6}>
@@ -62,10 +81,11 @@ const PersonalInfo = () => {
                 </Grid>
                 <Grid item xs={6}>
                     <TextField
-                        name="name"
+                        name="password"
                         label="Password"
                         type="password"
-                        value="98292"
+                        value={person.password}
+                        onChange={handleChange}
                         fullWidth />
                 </Grid>
                 <Grid item xs={6}>
@@ -75,6 +95,7 @@ const PersonalInfo = () => {
                     <Button
                         variant="outlined"
                         color="primary"
+                        onClick={handleSubmit}
                         fullWidth>
                         Update
                     </Button>
