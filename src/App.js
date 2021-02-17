@@ -1,7 +1,9 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Avatar, makeStyles } from '@material-ui/core';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import { SignIn } from 'pages/auth/index';
+import AllRoutes from 'routes';
+
 
 import webAppLogo from './kleep.png';
 
@@ -18,10 +20,15 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
+
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
   return (
     <Fragment>
       <Avatar alt="Remy Sharp" variant="square" src={webAppLogo} className={classes.logoStyle} />
-      <SignIn />
+      <Router>
+        <AllRoutes isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
+      </Router>
     </Fragment>
   );
 }
