@@ -9,6 +9,9 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+
+    },
     paper: {
         marginTop: theme.spacing(14),
         display: 'flex',
@@ -86,116 +89,119 @@ const SignIn = ({ setLoggedIn }) => {
 
 
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <Paper elevation={3} square={false} className={classes.container}>
-                <div className={classes.paper}>
-                    <Typography component="h4" variant="h4">
-                        Sign in
-                    </Typography>
-                    <form className={classes.form} noValidate>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            label="Email Address"
-                            name="email"
-                            value={signIn.email}
-                            onChange={handleChange}
-                            autoComplete="email"
-                            autoFocus
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            value={signIn.password}
-                            onChange={handleChange}
-                            name="password"
-                            label="Password"
-                            type="password"
-                            autoComplete="current-password"
-                        />
-                        <Grid container>
-                            <Grid item xs>
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary" />}
-                                    label="Keep me sign in"
-                                />
+        <div className={classes.root}>
 
-                            </Grid>
-                            <Grid item>
-                                <Box mt={1}>
-                                    <Link href="#" className={classes.forgetTextStyle}>
-                                        Forgot password?
+
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Paper elevation={3} square={false} className={classes.container}>
+                    <div className={classes.paper}>
+                        <Typography component="h4" variant="h4">
+                            Sign in
+                    </Typography>
+                        <form className={classes.form} noValidate>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                label="Email Address"
+                                name="email"
+                                value={signIn.email}
+                                onChange={handleChange}
+                                autoComplete="email"
+                                autoFocus
+                            />
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                value={signIn.password}
+                                onChange={handleChange}
+                                name="password"
+                                label="Password"
+                                type="password"
+                                autoComplete="current-password"
+                            />
+                            <Grid container>
+                                <Grid item xs>
+                                    <FormControlLabel
+                                        control={<Checkbox value="remember" color="primary" />}
+                                        label="Keep me sign in"
+                                    />
+
+                                </Grid>
+                                <Grid item>
+                                    <Box mt={1}>
+                                        <Link href="#" className={classes.forgetTextStyle}>
+                                            Forgot password?
                                     </Link>
-                                </Box>
+                                    </Box>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            onClick={handleSubmit}
-                        >
-                            Log in
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={handleSubmit}
+                            >
+                                Log in
                         </Button>
-                        <Grid
-                            container
-                            direction="column"
-                            justify="space-between"
-                            alignItems="center">
-                            <Grid item>
-                                <Typography variant="subtitle1" align="center">
-                                    - OR -
+                            <Grid
+                                container
+                                direction="column"
+                                justify="space-between"
+                                alignItems="center">
+                                <Grid item>
+                                    <Typography variant="subtitle1" align="center">
+                                        - OR -
                                 </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography variant="subtitle1" align="center">
-                                    Sign in With
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant="subtitle1" align="center">
+                                        Sign in With
                                 </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justify="space-around"
-                                    alignItems="center">
-                                    <Grid item>
-                                        <Avatar className={classes.facebookAvatar}>
-                                            <i className="fab fa-facebook-f"></i>
-                                        </Avatar>
-                                    </Grid>
-                                    <Grid item>
-                                        <Avatar className={classes.googleAvatar}>
-                                            <i className="fab fa-google"></i>
-                                        </Avatar>
+                                </Grid>
+                                <Grid item>
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        justify="space-around"
+                                        alignItems="center">
+                                        <Grid item>
+                                            <Avatar className={classes.facebookAvatar}>
+                                                <i className="fab fa-facebook-f"></i>
+                                            </Avatar>
+                                        </Grid>
+                                        <Grid item>
+                                            <Avatar className={classes.googleAvatar}>
+                                                <i className="fab fa-google"></i>
+                                            </Avatar>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
-                        <Grid
-                            container
-                            direction="column"
-                            justify="space-between"
-                            alignItems="center">
-                            <Grid item>
-                                <Box mt={3}>
-                                    <Typography variant="body2" align="center">
-                                        Don't have an account? <Link href="#" variant="h5" className={classes.signUpTextStyle}> Sign Up</Link>
-                                    </Typography>
-                                </Box>
+                            <Grid
+                                container
+                                direction="column"
+                                justify="space-between"
+                                alignItems="center">
+                                <Grid item>
+                                    <Box mt={3}>
+                                        <Typography variant="body2" align="center">
+                                            Don't have an account? <Link href="#" variant="h5" className={classes.signUpTextStyle}> Sign Up</Link>
+                                        </Typography>
+                                    </Box>
+                                </Grid>
                             </Grid>
-                        </Grid>
-
-                    </form>
-                </div>
-            </Paper>
-        </Container>
+                        </form>
+                    </div>
+                </Paper>
+            </Container>
+        </div>
     );
 }
 

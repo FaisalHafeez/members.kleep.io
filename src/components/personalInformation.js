@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, TextField, Typography, Box, Button } from '@material-ui/core';
 
@@ -22,14 +22,28 @@ const PersonalInfo = () => {
     };
 
     const [person, setPerson] = useState(initialPersonInfo);
+    const [disable, setDisable] = useState(true);
+
+    useEffect(() => {
+
+        const updatedPersonInfo = {
+            name: 'abc',
+            email: 'abc@gmail.com',
+            password: 'ncdcnl'
+        };
+        setPerson(updatedPersonInfo);
+
+    }, [])
 
     const handleChange = ({ target: { name, value } }) => {
+        setDisable(false);
         setPerson({
             ...person, [name]: value
         })
     }
 
     const handleSubmit = () => {
+        setDisable(true);
         console.log('person ----', person);
     }
 
@@ -95,6 +109,7 @@ const PersonalInfo = () => {
                     <Button
                         variant="outlined"
                         color="primary"
+                        disabled={disable}
                         onClick={handleSubmit}
                         fullWidth>
                         Update

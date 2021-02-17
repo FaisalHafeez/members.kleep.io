@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Tabs, Tab, Typography, Box, Container } from '@material-ui/core';
 
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 
-import { PersonalInfo, BillingInformation } from 'components'
+import { PersonalInfo, BillingInformation, Footer } from 'components'
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -43,7 +43,8 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.background.paper,
-        marginLeft: 20
+        marginLeft: 20,
+        height: '70vh'
     },
 }));
 
@@ -61,36 +62,38 @@ const Home = () => {
     };
 
     return (
-        <Container maxWidth="lg">
-            <div className={classes.root}>
-                <AppBar position="static" color="default">
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        variant="fullWidth"
-                        aria-label="full width tabs example"
+        <Fragment>
+            <Container maxWidth="lg">
+                <div className={classes.root}>
+                    <AppBar position="static" color="default">
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            indicatorColor="primary"
+                            textColor="primary"
+                            variant="fullWidth"
+                            aria-label="full width tabs example"
+                        >
+                            <Tab label="Personal Information" {...a11yProps(0)} />
+                            <Tab label="Billing Information" {...a11yProps(1)} />
+                        </Tabs>
+                    </AppBar>
+                    <SwipeableViews
+                        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                        index={value}
+                        onChangeIndex={handleChangeIndex}
                     >
-                        <Tab label="Personal Information" {...a11yProps(0)} />
-                        <Tab label="Billing Information" {...a11yProps(1)} />
-                    </Tabs>
-                </AppBar>
-                <SwipeableViews
-                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                    index={value}
-                    onChangeIndex={handleChangeIndex}
-                >
-                    <TabPanel value={value} index={0} dir={theme.direction}>
-                        <PersonalInfo />
-                    </TabPanel>
-                    <TabPanel value={value} index={1} dir={theme.direction}>
-                        <BillingInformation />
-                    </TabPanel>
-                </SwipeableViews>
-            </div>
-        </Container>
-    );
+                        <TabPanel value={value} index={0} dir={theme.direction}>
+                            <PersonalInfo />
+                        </TabPanel>
+                        <TabPanel value={value} index={1} dir={theme.direction}>
+                            <BillingInformation />
+                        </TabPanel>
+                    </SwipeableViews>
+                </div>
+            </Container>
+            <Footer />
+        </Fragment>);
 }
 
 export default Home;
