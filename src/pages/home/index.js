@@ -5,7 +5,7 @@ import { AppBar, Tabs, Tab, Typography, Box, Container } from '@material-ui/core
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 
-import { PersonalInfo, BillingInformation, Footer } from 'components'
+import { PersonalInfo, BillingInformation, Footer, Header } from 'components'
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Home = () => {
+const Home = ({ setLoggedIn }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
@@ -63,6 +63,7 @@ const Home = () => {
 
     return (
         <Fragment>
+            <Header setLoggedIn={setLoggedIn} />
             <Container maxWidth="lg">
                 <div className={classes.root}>
                     <AppBar position="static" color="default">

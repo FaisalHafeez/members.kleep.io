@@ -5,7 +5,7 @@ import { AuthRoutes, PublicRoutes } from 'routing';
 const AllRoutes = ({ isLoggedIn, setLoggedIn }) => {
     return (
         <Fragment>
-            { isLoggedIn ? (<AuthRoutes />) : (<PublicRoutes setLoggedIn={setLoggedIn} />)}
+            { isLoggedIn ? (<AuthRoutes setLoggedIn={setLoggedIn} />) : (<PublicRoutes setLoggedIn={setLoggedIn} />)}
         </Fragment>)
 }
 
