@@ -1,11 +1,14 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Tabs, Tab, Typography, Box, Container } from '@material-ui/core';
 
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 
-import { PersonalInfo, BillingInformation, Footer, Header } from 'components'
+import { PersonalInfo, BillingInformation, Footer, Header } from 'components';
+
+import { auth } from '../../firebase';
+import firebase from '../../firebase';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -49,9 +52,92 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Home = ({ setLoggedIn }) => {
+
+    const initialPersonInfo = {
+        name: '',
+        email: '',
+        password: ''
+    };
+
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
+    const [loader, setLoader] = React.useState(true);
+
+    const [person, setPerson] = useState(initialPersonInfo);
+    const [disablePersonal, setDisablePersonal] = useState(true);
+
+
+    const handleChangePersonal = ({ target: { name, value } }) => {
+        setDisablePersonal(false);
+        setPerson({
+            ...person, [name]: value
+        })
+    }
+
+    useEffect(() => {
+
+        fetchCurrentUserInfo();
+
+    }, []);
+
+    const fetchCurrentUserInfo = async () => {
+
+        try {
+            const { uid } = await auth.currentUser;
+            const response = await firebase
+                .firestore()
+                .collection('users')
+                .doc(uid)
+                .get();
+
+            const result = response.data();
+            !result ? setPerson(initialPersonInfo) : setPerson(result);
+            setLoader(false);
+        } catch (ex) {
+
+            if (ex && ex.message) {
+                const [errorMsg] = ex.message.split('.');
+                console.log(errorMsg);
+            }
+        }
+
+    }
+
+
+    const handlePersonalSubmit = async () => {
+
+        try {
+
+            const { emailVerified } = person;
+
+            var user = await firebase.auth().currentUser;
+            console.log('current user', user);
+
+            const { email, password } = person;
+            if (!emailVerified) {
+                await user.updateEmail(email);
+                await user.updatePassword(password);
+            }
+
+            await firebase
+                .firestore()
+                .collection('users')
+                .doc(user.uid)
+                .set(person);
+
+            setDisablePersonal(true);
+            fetchCurrentUserInfo();
+
+        } catch (ex) {
+
+            if (ex && ex.message) {
+                const [errorMsg] = ex.message.split('.');
+                console.log(errorMsg);
+            }
+        }
+
+    }
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -60,6 +146,10 @@ const Home = ({ setLoggedIn }) => {
     const handleChangeIndex = (index) => {
         setValue(index);
     };
+
+    if (loader) {
+        return <p>Loading .... </p>
+    }
 
     return (
         <Fragment>
@@ -85,7 +175,11 @@ const Home = ({ setLoggedIn }) => {
                         onChangeIndex={handleChangeIndex}
                     >
                         <TabPanel value={value} index={0} dir={theme.direction}>
-                            <PersonalInfo />
+                            <PersonalInfo
+                                person={person}
+                                disable={disablePersonal}
+                                onSubmit={handlePersonalSubmit}
+                                onChange={handleChangePersonal} />
                         </TabPanel>
                         <TabPanel value={value} index={1} dir={theme.direction}>
                             <BillingInformation />

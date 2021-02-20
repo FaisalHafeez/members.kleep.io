@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, TextField, Typography, Box, Button } from '@material-ui/core';
 
@@ -13,39 +13,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const PersonalInfo = () => {
+const PersonalInfo = ({ person, disable, onChange, onSubmit }) => {
+
     const classes = useStyles();
-    const initialPersonInfo = {
-        name: '',
-        email: '',
-        password: ''
-    };
-
-    const [person, setPerson] = useState(initialPersonInfo);
-    const [disable, setDisable] = useState(true);
-
-    useEffect(() => {
-
-        const updatedPersonInfo = {
-            name: 'abc',
-            email: 'abc@gmail.com',
-            password: 'ncdcnl'
-        };
-        setPerson(updatedPersonInfo);
-
-    }, [])
-
-    const handleChange = ({ target: { name, value } }) => {
-        setDisable(false);
-        setPerson({
-            ...person, [name]: value
-        })
-    }
-
-    const handleSubmit = () => {
-        setDisable(true);
-        console.log('person ----', person);
-    }
 
     return (
         <div className={classes.root}>
@@ -64,7 +34,7 @@ const PersonalInfo = () => {
                         name="name"
                         label="Name"
                         value={person.name}
-                        onChange={handleChange}
+                        onChange={onChange}
                         fullWidth />
                 </Grid>
                 <Grid item xs={6}>
@@ -81,7 +51,8 @@ const PersonalInfo = () => {
                         name="email"
                         label="Email"
                         value={person.email}
-                        onChange={handleChange}
+                        onChange={onChange}
+                        disabled={person.emailVerified ? true : false}
                         fullWidth />
                 </Grid>
                 <Grid item xs={6}>
@@ -98,8 +69,9 @@ const PersonalInfo = () => {
                         name="password"
                         label="Password"
                         type="password"
+                        disabled={person.emailVerified ? true : false}
                         value={person.password}
-                        onChange={handleChange}
+                        onChange={onChange}
                         fullWidth />
                 </Grid>
                 <Grid item xs={6}>
@@ -107,10 +79,10 @@ const PersonalInfo = () => {
                 </Grid>
                 <Grid item xs={6}>
                     <Button
-                        variant="outlined"
+                        variant="contained"
                         color="primary"
                         disabled={disable}
-                        onClick={handleSubmit}
+                        onClick={onSubmit}
                         fullWidth>
                         Update
                     </Button>

@@ -9,7 +9,9 @@ import {
 
 import { Link, useHistory } from 'react-router-dom';
 
+import firebase from '../../firebase';
 import { auth } from '../../firebase';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -80,8 +82,10 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = ({ setLoggedIn }) => {
 
     const initialSignUpObj = {
+        name: '',
         email: '',
-        password: ''
+        password: '',
+        emailVerified: false
     }
 
     const classes = useStyles();
@@ -96,7 +100,17 @@ const SignUp = ({ setLoggedIn }) => {
         e.preventDefault();
         try {
             const { email, password } = signUp;
-            await auth.createUserWithEmailAndPassword(email, password);
+            const response = await auth.createUserWithEmailAndPassword(email, password);
+            const { user: { uid } } = response
+            console.log(response, uid);
+            await firebase
+                .firestore()
+                .collection("users")
+                .doc(uid)
+                .set({
+                    ...signUp,
+                });
+
             setLoggedIn(true);
             history.push('/');
         } catch (ex) {
@@ -123,12 +137,23 @@ const SignUp = ({ setLoggedIn }) => {
                                 margin="normal"
                                 required
                                 fullWidth
+                                label="Full Name"
+                                name="name"
+                                value={signUp.name}
+                                onChange={handleChange}
+                                autoComplete={false}
+                                autoFocus
+                            />
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
                                 label="Email Address"
                                 name="email"
                                 value={signUp.email}
                                 onChange={handleChange}
-                                autoComplete="email"
-                                autoFocus
+                                autoComplete={false}
                             />
                             <TextField
                                 variant="outlined"
@@ -140,7 +165,7 @@ const SignUp = ({ setLoggedIn }) => {
                                 name="password"
                                 label="Password"
                                 type="password"
-                                autoComplete="current-password"
+                                autoComplete={false}
                             />
                             <Button
                                 type="submit"

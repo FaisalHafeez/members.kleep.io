@@ -1,10 +1,12 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Button, IconButton, Grid, Box } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import { auth } from '../firebase';
+
+import logoUrl from 'assets/header-logo.png';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,9 +15,11 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
         marginRight: theme.spacing(2),
+        color: theme.palette.primary.dark
     },
-    title: {
-        flexGrow: 1,
+    logoStyle: {
+        width: 144,
+        marginTop: 7
     },
 }));
 
@@ -30,18 +34,33 @@ const Header = ({ setLoggedIn }) => {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="static" style={{ backgroundColor: 'white' }}>
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                    <IconButton edge="start" className={classes.menuButton} aria-label="menu">
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        Kleep
-                    </Typography>
-                    <Button color="inherit" onClick={handleLogout}>Logout</Button>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="center">
+                        <Grid item>
+                            <img src={logoUrl} alt="Kleep" className={classes.logoStyle} />
+                        </Grid>
+                        <Grid item>
+                            <Box mt={1}>
+                                <Button color="primary" variant="outlined" onClick={handleLogout}>Logout</Button>
+                            </Box>
+                        </Grid>
+
+                    </Grid>
+
+
+
+
                 </Toolbar>
             </AppBar>
-        </div>
+        </div >
     );
 }
 

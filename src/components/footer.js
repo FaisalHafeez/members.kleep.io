@@ -1,13 +1,13 @@
 import React from 'react';
-import { Container, Grid, Typography, Box } from '@material-ui/core';
+import { Container, Grid, Typography, } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import DescriptionIcon from '@material-ui/icons/Description';
-
+import logoUrl from 'assets/footer-logo.png';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        position: 'fixed'
     },
     bacgroundColorBlack: {
         backgroundColor: '#333333',
@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     Margin: {
         marginTop: theme.spacing.unit * 4,
         paddingRight: theme.spacing.unit * 5,
+    },
+    logoStyle: {
+        width: 144,
+        marginTop: 7
     },
 }));
 
@@ -82,16 +86,7 @@ const Footer = () => {
                         </Grid>
                     </Grid>
                     <Grid item md={4} sm={12}>
-                        <Grid container>
-                            <Grid item>
-                                <DescriptionIcon style={{ fontSize: 50 }} />
-                            </Grid>
-                            <Grid>
-                                <Box mt={1}>
-                                    <Typography variant="h4">kleep</Typography>
-                                </Box>
-                            </Grid>
-                        </Grid>
+                        <img src={logoUrl} alt="Kleep" className={classes.logoStyle} />
                     </Grid>
                 </Grid>
             </Container>

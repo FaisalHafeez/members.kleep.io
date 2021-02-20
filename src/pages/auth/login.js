@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     },
     facebookAvatar: {
         margin: theme.spacing(1),
-        color: theme.palette.primary.dark,
+        color: theme.palette.secondary.dark,
         backgroundColor: theme.palette.primary.light,
         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
         cursor: 'pointer'
@@ -80,7 +80,7 @@ const SignIn = ({ setLoggedIn }) => {
 
     const initialSignInObj = {
         email: '',
-        password: ''
+        password: '',
     }
 
     const classes = useStyles();
@@ -109,37 +109,33 @@ const SignIn = ({ setLoggedIn }) => {
         console.log('Here IT is')
     }
 
-    const handleLoginWithGoogle = () => {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth()
-            .signInWithPopup(provider)
-            .then((result) => {
-                /** @type {firebase.auth.OAuthCredential} */
-                var credential = result.credential;
-                console.log(credential);
+    const handleLoginWithGoogle = async () => {
 
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                var token = credential.accessToken;
-                console.log(token);
+        try {
 
-                // The signed-in user info.
-                var user = result.user;
-                console.log(user);
-                // ...
-            }).catch((error) => {
-                // Handle Errors here.
-                var errorCode = error.code;
-                console.log(errorCode);
-                var errorMessage = error.message;
-                console.log(errorMessage);
-                // The email of the user's account used.
-                var email = error.email;
-                console.log(email);
-                // The firebase.auth.AuthCredential type that was used.
-                var credential = error.credential;
-                console.log(credential);
-                // ...
-            });
+            var provider = new firebase.auth.GoogleAuthProvider();
+            const response = await firebase.auth().signInWithPopup(provider);
+            const { user: { displayName, email, emailVerified, uid } } = response;
+            console.log('respnse ', response, displayName, email, emailVerified);
+
+            await firebase
+                .firestore()
+                .collection("users")
+                .doc(uid)
+                .set({
+                    name: displayName,
+                    email,
+                    emailVerified
+                });
+
+        } catch (ex) {
+
+            if (ex && ex.message) {
+                const [errorMsg] = ex.message.split('.');
+                console.log(errorMsg);
+            }
+        }
+
     }
 
     return (
