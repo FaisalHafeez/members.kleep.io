@@ -36,9 +36,6 @@ const Header = ({ setLoggedIn }) => {
         <div className={classes.root}>
             <AppBar position="static" style={{ backgroundColor: 'white' }}>
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
                     <Grid
                         container
                         direction="row"
@@ -54,10 +51,6 @@ const Header = ({ setLoggedIn }) => {
                         </Grid>
 
                     </Grid>
-
-
-
-
                 </Toolbar>
             </AppBar>
         </div >

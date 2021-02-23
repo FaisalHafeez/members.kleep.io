@@ -24,7 +24,7 @@ const PersonalInfo = ({ person, disable, onChange, onSubmit }) => {
                     <Box mt={1}>
                         <Typography
                             align="center"
-                            variant="h5"
+                            variant="subtitle1"
                             gutterBottom>Name
                         </Typography>
                     </Box>
@@ -41,7 +41,7 @@ const PersonalInfo = ({ person, disable, onChange, onSubmit }) => {
                     <Box mt={1}>
                         <Typography
                             align="center"
-                            variant="h5"
+                            variant="subtitle1"
                             gutterBottom>Email
                         </Typography>
                     </Box>
@@ -59,7 +59,7 @@ const PersonalInfo = ({ person, disable, onChange, onSubmit }) => {
                     <Box mt={1}>
                         <Typography
                             align="center"
-                            variant="h5"
+                            variant="subtitle1"
                             gutterBottom>Password
                         </Typography>
                     </Box>
